@@ -4,7 +4,11 @@ import { getMessageInfo } from "./status";
 import { BaseResponse } from "./type";
 
 const service = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_BASEURL,
+  // 启用 mock 就请求 mock 路径
+  // 不启用 mock 就请求 正常后端路径
+  baseURL: Boolean(import.meta.env.VITE_APP_USE_MOCK)
+    ? import.meta.env.VITE_APP_MOCK_BASEURL
+    : import.meta.env.VITE_APP_API_BASEURL,
   timeout: 5000,
 });
 
