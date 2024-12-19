@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./styles/reset.css";
 import createAppRouter from "./router";
 import pinia from "./store";
+import "./styles/index.less"
 
 async function bootstrap() {
   const app = createApp(App);
