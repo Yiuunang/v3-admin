@@ -9,30 +9,37 @@ export default [
             if(body.username !== body.password) {
                 return {
                     code: 1,
-                    message: '用户名或密码错误',
+                    message: '密码错误',
                     data: {
                         username: '',
                         roles: [],
-                        accessToken: '',
-                    },
-                }
+                        accessToken: ''
+                    }
+                };
             }
 
-            let data = {
-                username: 'common',
-                roles: ['common'],
-                accessToken: 'common',
+            // 其余的则显示登录成功
+            if (body.username === 'admin') {
+                return {
+                    code: 0,
+                    message: '登录成功',
+                    data: {
+                        username: 'admin',
+                        roles: ['admin'],
+                        accessToken: 'admin'
+                    }
+                };
+            } else {
+                return {
+                    code: 0,
+                    message: '登录成功',
+                    data: {
+                        username: 'common',
+                        roles: ['common'],
+                        accessToken: 'common'
+                    }
+                };
             }
-            if(body.username === 'admin') {
-                data.username = 'admin';
-                data.roles = ['admin'];
-                data.accessToken = 'admin';
-            }
-            return {
-                code: 0,
-                message: '登录成功',
-                data
-              };
         }
     }
 ]  as MockMethod[]

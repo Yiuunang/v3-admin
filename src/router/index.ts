@@ -6,10 +6,14 @@ type RouteModuleType = {
 };
 
 // 获取所有模块的路由（异步）
-const modules = import.meta.glob<RouteModuleType>(["./modules/*.ts"]);
-// const modules: Record<string, any> = import.meta.glob(["./modules/*.ts"], {
-//   eager: true,
-// });
+// const modules = import.meta.glob<RouteModuleType>(["./modules/*.ts"]);
+// 组合路由信息
+// import.meta.glob 为 vite 提供的特殊导入方式
+// 它可以将模块中全部内容导入并返回一个Record对象
+// 默认为懒加载模式 加入配置项 eager 取消懒加载
+const modules: Record<string, any> = import.meta.glob(['./modules/*.ts'], {
+  eager: true
+});
 
 // 路由配置
 const routes: RouteRecordRaw[] = [
@@ -21,32 +25,47 @@ const routes: RouteRecordRaw[] = [
     children: [],
   },
 ];
+Object.keys(modules).forEach((key) => {
+    const module = modules[key].default;
+    routes.push(module);
+});
 
-// 动态加载路由并创建 Router 实例
-async function createAppRouter() {
-  for (const path in modules) {
-    const mod = await modules[path]();
-    routes.push(mod.default);
-  }
+// // 动态加载路由并创建 Router 实例
+// async function createAppRouter() {
+//   for (const path in modules) {
+//     const mod = await modules[path]();
+//     routes.push(mod.default);
+//   }
 
-  return createRouter({
-    history: createWebHashHistory(),
-    routes,
-  });
-}
+//   return createRouter({
+//     history: createWebHashHistory(),
+//     routes,
+//   });
+// }
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
 
+
+// 白名单路由
+const whiteList = ["/login", "/404", "/about"];
+
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  next();
+
+  const token = sessionStorage.getItem('userInfo');
+  const userIsLogin = token ? true : false;
+  if (userIsLogin || whiteList.includes(to.path)) {
+    next();
+  } else {    
+    next('/login');
+  }
 });
 
 router.afterEach(() => {
   NProgress.done();
 });
 
-export default createAppRouter;
+export default router;

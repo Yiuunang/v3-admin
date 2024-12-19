@@ -6,7 +6,7 @@ import { BaseResponse } from "./type";
 const service = axios.create({
   // 启用 mock 就请求 mock 路径
   // 不启用 mock 就请求 正常后端路径
-  baseURL: Boolean(import.meta.env.VITE_APP_USE_MOCK)
+    baseURL: import.meta.env.VITE_APP_USE_MOCK
     ? import.meta.env.VITE_APP_MOCK_BASEURL
     : import.meta.env.VITE_APP_API_BASEURL,
   timeout: 5000,
@@ -26,7 +26,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
-      return response.data;
+      return response;
     }
     ElMessage({
       message: getMessageInfo(response.status),
@@ -62,10 +62,10 @@ const requestInstance = <T = any>(config: AxiosRequestConfig): Promise<T> => {
   return new Promise((resolve, reject) => {
     service
       .request<any, AxiosResponse<BaseResponse>>(conf)
-      .then((res: AxiosResponse<BaseResponse>) => {
-        const data = res.data;
+      .then((res: AxiosResponse<BaseResponse>) => {        
+        const data = res.data;        
         // 如果data.code为错误代码返回message信息
-        if (data.code != 1) {
+        if (data.code != 0) {
           ElMessage({
             message: data.message,
             type: "error",

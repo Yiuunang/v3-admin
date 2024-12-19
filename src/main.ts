@@ -1,16 +1,15 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import createAppRouter from "./router";
+import router from "./router";
 import pinia from "./store";
 import "./styles/index.less"
 
-async function bootstrap() {
-  const app = createApp(App);
+// 样式
+import 'element-plus/theme-chalk/el-message.css';
+// 黑色主题样式
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
-  const router = await createAppRouter();
-  app.use(router);
-  app.use(pinia);
-  app.mount("#app");
-}
-
-bootstrap();
+const app = createApp(App);
+app.use(router);
+app.use(pinia);
+app.mount("#app");

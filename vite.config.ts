@@ -33,6 +33,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       viteMockServe({
         // 如果接口为 /mock/xxx 以 mock 开头就会被拦截响应配置的内容
         mockPath: 'mock', // 数据模拟需要拦截的请求起始 URL
+        enable: true,
       }),
       // 自动引入组件及ICON
       AutoImport({
