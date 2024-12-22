@@ -47,7 +47,7 @@ const rules = ref({
 
 const userLogin = () => {
     userStore.storeUserLogin(userInfo.value).then(() => { 
-        router.push('/home');
+        router.push('/');
     });
 }
 </script>
@@ -58,7 +58,7 @@ const userLogin = () => {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: var(--bgc);
+    background: var(--lj-color-main);
 
     h1 {
         font-size: 30px;

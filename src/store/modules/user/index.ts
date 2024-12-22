@@ -1,4 +1,5 @@
 import { refreshUserInfo, uesrLogin } from "@/api/user";
+import router from "@/router";
 import store from "@/store";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -34,12 +35,19 @@ const useUserStore = defineStore(
       }
     };
 
+    const userLogout = () => {
+      sessionStorage.removeItem('userInfo');
+      accessToken.value = '';
+      router.push("/login");
+    }
+
     return {
       username,
       roles,
       accessToken,
       storeUserLogin,
       refreshToken,
+      userLogout,
     };
   },
   {
