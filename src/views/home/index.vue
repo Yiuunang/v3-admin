@@ -19,9 +19,9 @@
             <el-table-column prop="introduce" label="详情"></el-table-column>
         </el-table>
         <!-- 翻页 -->
-        <el-pagination class="pagination" background layout="total, prev, pager, next, sizes" :page-size="pageData.pageSize"
-            :total="pageData.dataCount" :page-sizes="[5, 10, 15, 20]" @current-change="handlerCurrentChange"
-            @size-change="handlerSizeChange">
+        <el-pagination class="pagination" background layout="total, prev, pager, next, sizes"
+            :page-size="pageData.pageSize" :total="pageData.dataCount" :page-sizes="[5, 10, 15, 20]"
+            @current-change="handlerCurrentChange" @size-change="handlerSizeChange">
         </el-pagination>
     </div>
 </template>
