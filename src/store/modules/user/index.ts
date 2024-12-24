@@ -7,7 +7,9 @@ import { ref } from "vue";
 const useUserStore = defineStore(
   "userInfo",
   () => {
-    const username = ref("");
+    const locationInfo = JSON.parse(sessionStorage.getItem("userInfo") || "{}");
+
+    const username = ref(locationInfo?.username || "");
     const roles = ref<string[]>([]);
     const accessToken = ref("");
 
@@ -36,10 +38,10 @@ const useUserStore = defineStore(
     };
 
     const userLogout = () => {
-      sessionStorage.removeItem('userInfo');
-      accessToken.value = '';
+      sessionStorage.removeItem("userInfo");
+      accessToken.value = "";
       router.push("/login");
-    }
+    };
 
     return {
       username,
@@ -52,18 +54,17 @@ const useUserStore = defineStore(
   },
   {
     persist: {
-        key: 'userInfo',
-        storage: sessionStorage,
-        pick: ['accessToken'],
+      key: "userInfo",
+      storage: sessionStorage,
+      pick: ["accessToken", "username"],
     },
   }
 );
 
 export default useUserStore;
 
-
 /**
  * 在组件外使用 userStore
- * @returns 
+ * @returns
  */
-export const useUserStoreWithOut = () => useUserStore(store)
+export const useUserStoreWithOut = () => useUserStore(store);
