@@ -11,7 +11,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:eslint": "eslint --cache --max-warnings 0 {src,mock}/**/*.{vue,ts,tsx} --fix",
     "lint:prettier": "prettier --write **/*.{js,json,tsx,css,less,scss,vue,html,md}",
-    "lint:lint-staged": "lint-staged"
+    "lint:lint-staged": "lint-staged",
+    "commit": "cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +41,9 @@
     "@types/nprogress": "^0.2.3",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.11.0",
+    "czg": "^1.11.0",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

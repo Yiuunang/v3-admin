@@ -24,10 +24,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import useUserStore from '@/store/modules/user';
-import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
-const router = useRouter();
 
 let showSetting = ref(false);
 
