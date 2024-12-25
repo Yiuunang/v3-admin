@@ -58,7 +58,7 @@ const userLogin = () => {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: var(--lj-color-main);
+    background: var(--lj-backgroud-color);
 
     h1 {
         font-size: 30px;
