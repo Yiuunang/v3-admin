@@ -31,6 +31,29 @@
             </template>
         </el-table-column>
     </el-table>
+    <!-- dialog -->
+    <el-dialog v-model="dialogVisible" title="编辑用户信息">
+        <el-form :model="editUser">
+            <el-form-item label="用户昵称" label-width="120px">
+                <el-input v-model="editUser.nickName" class="w192" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="用户角色" label-width="120px">
+                <el-select v-model="editUser.role" multiple class="m-2" size="large" placeholder="请选择角色"
+                    style="width: 130px">
+                    <el-option v-for="item in roleWithAuthList" :key="item.roleId" :label="item.roleName"
+                        :value="item.roleId"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="changeInfo">
+                    修改
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -44,6 +67,13 @@ import { onMounted, reactive, ref } from 'vue';
 interface IQueryUser {
     nickName: string; // 用户别名
     role: number; // 角色编号
+}
+// 用户编辑接口
+interface IUserEdit {
+    id: number; // 用户id
+    nickName: string; // 用户昵称
+    role: number[]; // 用户角色
+    userName: string; // 用户名
 }
 
 // 所有用户数据
@@ -61,11 +91,19 @@ const searchData = reactive<IQueryUser>({
     role: 0
 })
 
+// 对话框的展示状态
+const dialogVisible = ref(false);
+// 编辑信息
+const editUser = reactive<IUserEdit>({
+    id: 0,
+    nickName: '',
+    role: [],
+    userName: ''
+});
+
 // 查询用户数据
 const handleSearch = () => {
     let res: IUser[] = [];
-
-
 
     if (searchData.nickName || searchData.role) {
         if (searchData.nickName) {
@@ -96,7 +134,32 @@ const fetchRoleWithAuthList = async () => {
 }
 
 // 编辑用户信息
-const handleEditUser = (info: IUser) => { }
+const handleEditUser = (info: IUser) => {
+    dialogVisible.value = true;
+    Object.assign(editUser, {
+        ...info,
+        role: info.role.map(item => item.role)
+    })
+}
+
+// 修改信息
+const changeInfo = () => {
+    dialogVisible.value = false;
+
+    const changeObj = renderList.value.find(item => item.id === editUser.id);
+    if (!changeObj) return;
+
+    changeObj.nickName = editUser.nickName;
+    changeObj.role = [];
+    roleWithAuthList.value.forEach(item => {
+        if (editUser.role.some(role => role === item.roleId)) {
+            changeObj.role.push({
+                role: item.roleId,
+                roleName: item.roleName
+            })
+        }
+    })
+}
 
 onMounted(() => {
     fetchUserList();
