@@ -10,7 +10,7 @@
         <el-table-column prop="roleName" label="角色名称" width="180px"></el-table-column>
         <el-table-column label="操作">
             <template #default="scope">
-                <el-button type="primary" size="small" @click="changeRole(scope.row)">编辑</el-button>
+                <el-button type="primary" size="small" @click="onChangeAuth(scope.row)">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -22,6 +22,9 @@ import { getRoleList } from '@/api/role';
 import { IRoleWithAuth } from '@/api/role/type';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 // 角色信息
 const roleList = ref<IRoleWithAuth[]>([]);
@@ -32,9 +35,15 @@ const fetchRoleList = async () => {
     roleList.value = list;
 }
 
-// 修改角色
-const changeRole = (row: IRoleWithAuth) => {
-
+// 修改权限
+const onChangeAuth = (row: IRoleWithAuth) => {
+    router.push({
+        path: 'auth',
+        query: {
+            id: row.roleId,
+            auth: row.authority,
+        }
+    })
 }
 
 // 添加角色
