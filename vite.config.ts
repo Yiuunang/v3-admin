@@ -29,6 +29,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       vue(),
       // jsx文件编译插件
       vueJsx(),
+      // 开启ElementPlus自动引入CSS
+      ElementPlus({}),
       // mock 的相关配置
       viteMockServe({
         // 如果接口为 /mock/xxx 以 mock 开头就会被拦截响应配置的内容
