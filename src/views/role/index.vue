@@ -21,11 +21,8 @@
 import { getRoleList } from '@/api/role';
 import { IRoleWithAuth } from '@/api/role/type';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 // 角色信息
 const roleList = ref<IRoleWithAuth[]>([]);
 

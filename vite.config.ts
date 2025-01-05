@@ -39,6 +39,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }),
       // 自动引入组件及ICON
       AutoImport({
+          // 自动引入的包
+          imports: ["vue", "vue-router"],
+          // 处理eslint
+          eslintrc: {
+            enabled: true,
+          },
           resolvers: [IconsResolver(), ElementPlusResolver()],
           dts: fileURLToPath(
               new URL("./types/auto-imports.d.ts", import.meta.url),

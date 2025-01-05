@@ -61,7 +61,6 @@ import { getRoleList } from '@/api/role';
 import { IRoleWithAuth } from '@/api/role/type';
 import { getUserList } from '@/api/user';
 import { IUser } from '@/api/user/type';
-import { onMounted, reactive, ref } from 'vue';
 
 // 用户查询接口
 interface IQueryUser {
